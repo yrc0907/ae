@@ -8,7 +8,7 @@ const createPrismaClient = () =>
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   new PrismaClient({
     log:
-      env.NODE_ENV === "development" ? ["error", "warn"] : ["error"],
+      env.NODE_ENV === "development" ? ["query","error", "warn"] : ["error"],
   });
 
 const globalForPrisma = globalThis as unknown as {

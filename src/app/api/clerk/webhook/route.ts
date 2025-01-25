@@ -11,7 +11,7 @@ export const POST = async (req: Request) => {
     const imageUrl = data.image_url;
     const id = data.id;
 
-    console.log(data);
+    // console.log(data);
     await db.user.upsert({
         where: { id },
         update: { emailAddress, firstName, lastName, imageUrl },

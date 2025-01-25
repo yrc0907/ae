@@ -1,12 +1,46 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
+// import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
+
+// const isPublicRoute = createRouteMatcher(['/sign-in(.*)','/sign-up(.*)','/api/clerk/webhook(.*)','/api/initial-sync(*)'])
+
+// export default clerkMiddleware(async (auth, request) => {
+//   if (!isPublicRoute(request)) {
+//     await auth.protect()
+//   }
+// })
+
+// export const config = {
+//   matcher: [
+//     // Skip Next.js internals and all static files, unless found in search params
+//     '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
+//     // Always run for API routes
+//     '/(api|trpc)(.*)',
+//   ],
+// }
+
+
+
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
 
-const isPublicRoute = createRouteMatcher(['/sign-in(.*)','/sign-up(.*)','/api/clerk/webhook(.*)'])
+const isPublicRoute = createRouteMatcher([
+  '/',
+  '/sign-in(.*)',
+  '/sign-up(.*)',
+  '/api/webhooks(.*)',
+  '/api/initial-sync(.*)',
+  '/api/aurinko/webhook(.*)',
+  '/api/stripe(.*)',
+  '/privacy',
+  '/terms-of-service'
+])
 
-export default clerkMiddleware(async (auth, request) => {
-  if (!isPublicRoute(request)) {
-    await auth.protect()
+export default clerkMiddleware((auth, req) => {
+  if (!isPublicRoute(req)) {
+    auth.protect()
   }
+
 })
+
 
 export const config = {
   matcher: [
@@ -15,4 +49,4 @@ export const config = {
     // Always run for API routes
     '/(api|trpc)(.*)',
   ],
-}
+};
